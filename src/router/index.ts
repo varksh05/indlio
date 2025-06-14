@@ -1,22 +1,50 @@
-import LoginView from '@/views/LoginView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: LoginView,
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/auth-view/LoginView.vue'),
     },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import('../views/AboutView.vue'),
-    // },
+    {
+      path: '/terms_of_service',
+      name: 'terms_of_service',
+      component: () => import('@/views/general/TermsOfServiceView.vue'),
+    },
+    {
+      path: '/privacy_policy',
+      name: 'privacy_policy',
+      component: () => import('@/views/general/PrivacyPolicyView.vue'),
+    },
+    {
+      path: '/',
+      name: ':w',
+      component: () => import('@/layouts/AppLayout.vue'),
+      children: [
+        {
+          path: 'appointments',
+          name: 'appointments',
+          component: () => import('@/views/app-view/workspace-view/AppointmentsView.vue'),
+        },
+        {
+          path: 'services',
+          name: 'services',
+          component: () => import('@/views/app-view/workspace-view/ServicesView.vue'),
+        },
+        {
+          path: 'bookings_page',
+          name: 'bookings_page',
+          component: () => import('@/views/app-view/workspace-view/BookingsPageView.vue'),
+        },
+        {
+          path: 'availability',
+          name: 'availability',
+          component: () => import('@/views/app-view/workspace-view/AvailabilityView.vue'),
+        },
+      ],
+    },
   ],
 })
 
